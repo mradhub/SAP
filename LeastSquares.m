@@ -189,8 +189,8 @@ hold on
 plot(obsFreq,EndFit,'b-')
 %hold on
 %plot(molFreq,maxTemp,'go')
-chiStart = sum((StartFit-obsInt).^2)/length(obsFreq)
-chiFit = sum((EndFit-obsInt).^2)/length(obsFreq)
+chiStart = sum((StartFit-obsInt).^2)/length(obsFreq);
+chiFit = sum((EndFit-obsInt).^2)/length(obsFreq);
 
 FitSim = [NTM,NTSig,TempM,TempSig,shiftM,shiftSig,FWHMM,FWHMSig];
 

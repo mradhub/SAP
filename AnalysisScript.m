@@ -34,3 +34,4 @@ FitSim = LeastSquares(NTL,NTU,FWHML,FWHMU,tempL,tempU,shiftL,shiftU,MolCal(:,1),
 %FitSim(7)
 %FitSim(8)
 IDPeaks=PeakMatch(DatCal(:,1),DatCal(:,end),Peaks(:,end),totalSim,25,2);
+PushResults(IDPeaks,FitSim,totalSim,'C:\Users\widicuslabuser\Desktop\','CH3OH')
