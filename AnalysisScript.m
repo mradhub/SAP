@@ -38,3 +38,4 @@ PushResults(IDPeaks,FitSim,totalSim,'C:\Users\widicuslabuser\Desktop\GAL19.61m0.
 if(IDPeaks==0)
     'No Peaks'
 end
+
