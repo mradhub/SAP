@@ -14,33 +14,78 @@
 % which peaks in an observational data set can be attributed to a given
 % molecule
 
-function IDPeaks = PeakMatch(FreqList,IntList,PeakID,totalsim,threshold,shift,thresh)
+function IDPeaks = PeakMatch(FreqList,IntList,PeakID,totalsim,threshold,thresh)
 
 %find peaks in totalsim
 n=2; %start at second point in totalsim
 %simlist = zeros(length(totalsim),2);
 while(n<=length(totalsim))
-    if(totalsim(n-1)<totalsim(n) && totalsim(n+1)<totalsim(n))
+    if(totalsim(n-1)<totalsim(n) && totalsim(n+1)<totalsim(n) && totalsim(n)>=thresh )
         simlist(n,1)=1;
         simlist(n,2)=totalsim(n);
     end
     n=n+1;
 end
+sum(simlist(:,1))
+sum(PeakID)
+threshold = threshold/100;
 
 %compare peaks in totalsim to observational peaks
 %make comparision by looking at where simlist(n,1) and PeakID(n) both equal
 %1, or the 1's are near each other.
-n=1;
+n=2;
 i=1;
-while(n<=length(simlist))%loop going thorugh simulation
-    if(simlist(n,1)==1 && PeakID(n)==1)
+
+while(n<=length(simlist))%loop going through simulation
+    if(simlist(n,1)==1 && PeakID(n)==1&&(simlist(n,2)>=IntList(n)*threshold))
         IDPeaks(i,1) = FreqList(n);
         IDPeaks(i,2) = totalsim(n);
-        IDPeaks(i,3) = IntList(n)/totalsim(n)*100;
+        IDPeaks(i,3) = IntList(n);
+        IDPeaks(i,4) = 0;
+        i=i+1;
+    elseif(simlist(n,1)==1 && PeakID(n-1)==1 && simlist(n,2)>=IntList(n-1)*threshold)
+        IDPeaks(i,1) = FreqList(n-1);
+        IDPeaks(i,2) = totalsim(n);
+        IDPeaks(i,3) = IntList(n-1);
+        IDPeaks(i,4) = -1;
+        i=i+1;
+    elseif(simlist(n,1)==1 && PeakID(n+1)==1 && simlist(n,2)>=IntList(n+1)*threshold)
+        IDPeaks(i,1) = FreqList(n+1);
+        IDPeaks(i,2) = totalsim(n);
+        IDPeaks(i,3) = IntList(n+1);
+        IDPeaks(i,4) = 1;
+        i=i+1;
+    elseif(simlist(n,1)==1 && PeakID(n-2)==1 && simlist(n,2)>=IntList(n-2)*threshold)
+        IDPeaks(i,1) = FreqList(n-2);
+        IDPeaks(i,2) = totalsim(n);
+        IDPeaks(i,3) = IntList(n-2);
+        IDPeaks(i,4) = -2;
+        i=i+1;
+    elseif(simlist(n,1)==1 && PeakID(n+2)==1 && simlist(n,2)>=IntList(n+2)*threshold)
+        IDPeaks(i,1) = FreqList(n+2);
+        IDPeaks(i,2) = totalsim(n);
+        IDPeaks(i,3) = IntList(n+2);
+        IDPeaks(i,4) = 2;
+        i=i+1;
+    %elseif(simlist(n,1)==1)
+     %   FreqList(n)
+    end
+    n=n+1;
+end
+
+
+%{
+while(n<=length(simlist))%loop going thorugh simulation
+    if(((simlist(n,1)==1 && PeakID(n)==1&&(simlist(n)>=IntList(n)*threshold))||(simlist(n,1)==1 && PeakID(n-1)==1&&(simlist(n)>=IntList(n-1)*threshold))||(simlist(n,1)==1 && PeakID(n+1)==1 &&(simlist(n)>=IntList(n+1)*threshold))||(simlist(n,1)==1 && PeakID(n-2)==1 &&(simlist(n)>=IntList(n-2)*threshold))||(simlist(n,1)==1 && PeakID(n+2)==1)&&(simlist(n)>=IntList(n+2)*threshold)))
+        IDPeaks(i,1) = FreqList(n);
+        IDPeaks(i,2) = totalsim(n);
+        IDPeaks(i,3) = IntList(n);
         i=i+1;
     end
     n=n+1;
 end
+%}
+
 
 %{
 %compare peaks in totalsim to observational peaks

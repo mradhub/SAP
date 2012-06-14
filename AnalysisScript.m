@@ -23,8 +23,9 @@ QNCat = importdata(QNmolpath);
 part = importdata(parpath);
 A = PartitionFunction(part);
 [AList,AguList,EUJ] = EinsteinAFind(MolCal,part);
-totalSim = totalSim(MolCal(:,1),DatCal(:,1),AguList,A,EUJ,NT,FWHM,Temp,Shift);
-FitSim = LeastSquares(NTL,NTU,FWHML,FWHMU,tempL,tempU,shiftL,shiftU,MolCal(:,1),DatCal(:,1),DatCal(:,end),AguList,A,EUJ);
+%totalSim = totalSim(MolCal(:,1),DatCal(:,1),AguList,A,EUJ,NT,FWHM,Temp,Shift);
+FitSim= LeastSquares(NTL,NTU,FWHML,FWHMU,tempL,tempU,shiftL,shiftU,MolCal(:,1),DatCal(:,1),DatCal(:,end),AguList,A,EUJ);
+totalSim = totalSim(MolCal(:,1),DatCal(:,1),AguList,A,EUJ,FitSim(1),FitSim(7),FitSim(3),FitSim(5));
 %FitSim(1)
 %FitSim(2)
 %FitSim(3)
@@ -33,7 +34,7 @@ FitSim = LeastSquares(NTL,NTU,FWHML,FWHMU,tempL,tempU,shiftL,shiftU,MolCal(:,1),
 %FitSim(6)
 %FitSim(7)
 %FitSim(8)
-IDPeaks=PeakMatch(DatCal(:,1),DatCal(:,end),Peaks(:,end),totalSim,0,2,threshold);
+IDPeaks=PeakMatch(DatCal(:,1),DatCal(:,end),Peaks(:,end),totalSim,25,threshold);
 PushResults(IDPeaks,FitSim,totalSim,'C:\Users\widicuslabuser\Desktop\Orion2\',molecule)
 if(IDPeaks==0)
     'No Peaks'
