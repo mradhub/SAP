@@ -33,8 +33,8 @@ FitSim = LeastSquares(NTL,NTU,FWHML,FWHMU,tempL,tempU,shiftL,shiftU,MolCal(:,1),
 %FitSim(6)
 %FitSim(7)
 %FitSim(8)
-IDPeaks=PeakMatch(DatCal(:,1),DatCal(:,end),Peaks(:,end),totalSim,25,2,threshold);
-PushResults(IDPeaks,FitSim,totalSim,'C:\Users\widicuslabuser\Desktop\GAL19.61m0.23_B2\',molecule)
+IDPeaks=PeakMatch(DatCal(:,1),DatCal(:,end),Peaks(:,end),totalSim,0,2,threshold);
+PushResults(IDPeaks,FitSim,totalSim,'C:\Users\widicuslabuser\Desktop\Orion2\',molecule)
 if(IDPeaks==0)
     'No Peaks'
 end

@@ -19,30 +19,16 @@ function IDPeaks = PeakMatch(FreqList,IntList,PeakID,totalsim,threshold,shift,th
 %find peaks in totalsim
 n=2; %start at second point in totalsim
 %simlist = zeros(length(totalsim),2);
+m=1;
 while(n<=length(totalsim))
     if(totalsim(n-1)<totalsim(n) && totalsim(n+1)<totalsim(n))
-        simlist(n,1)=1;
-        simlist(n,2)=totalsim(n);
+        simlist(m,1)=1;
+        simlist(m,2)=totalsim(n);
+        m=m+1;
     end
     n=n+1;
 end
 
-%compare peaks in totalsim to observational peaks
-%make comparision by looking at where simlist(n,1) and PeakID(n) both equal
-%1, or the 1's are near each other.
-n=1;
-i=1;
-while(n<=length(simlist))%loop going thorugh simulation
-    if(simlist(n,1)==1 && PeakID(n)==1)
-        IDPeaks(i,1) = FreqList(n);
-        IDPeaks(i,2) = totalsim(n);
-        IDPeaks(i,3) = IntList(n)/totalsim(n)*100;
-        i=i+1;
-    end
-    n=n+1;
-end
-
-%{
 %compare peaks in totalsim to observational peaks
 IDPeaks(1,1)=0;
 i=1;
@@ -62,4 +48,3 @@ while(n<=length(simlist))%loop going through simulation
     end
     n=n+1;
 end
-%}
