@@ -26,8 +26,8 @@ while(n<=length(totalsim))
     end
     n=n+1;
 end
-sum(simlist(:,1))
-sum(PeakID)
+sum(simlist(:,1));
+sum(PeakID);
 threshold = threshold/100;
 
 %compare peaks in totalsim to observational peaks

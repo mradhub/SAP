@@ -17,10 +17,10 @@ Shift = 0;
 NTL = 1E13;
 NTU = 1E17;
 FWHML = 2;
-FWHMU = 6;
+FWHMU = 12;
 shiftL = -3;
 shiftU = 3;
-tempL = 50;
-tempU = 500;
+tempL = 10;
+tempU = 190;
 molecule = 'CH3OH';
 
