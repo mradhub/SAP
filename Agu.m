@@ -11,4 +11,3 @@ function Agu = Agu(Int,frequency,Q300,ELJ,EUJ)
 
 k = 1.38065e-23;
 Agu =  2.7964E-16.*Int.*frequency.^2.*Q300./(exp(-ELJ/(k*300)) - exp(-EUJ/(k*300)));
-
