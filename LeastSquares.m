@@ -6,8 +6,16 @@
 %        FWHMU - full width half max upper limit (km/s)
 %        tempL - temperature lower limit (K)
 %        tempU - temperature upper limit (K)
-%        shiftL - shift lower limit (km/s)
-%        shiftU - shift upper limit (km/s)
+%        shiftL - shift lower limit (MHz)
+%        shiftU - shift upper limit (MHz)
+%        molFreq - molecule frequency list from catalog file
+%        obsFreq - observational frequency data
+%        obsInt - observational intensity data
+%        AguList - Einstein A times upper state degeneracy for transitions
+%        A - coefficient of partition function fit
+%        EUJ - upper state energy in joules
+% Output:FitSim = [NTM,NTSig,TempM,TempSig,shiftM,shiftSig,FWHMM,FWHMSig];
+% Fit order: NT, Temp, shift, FWHM, NT, FWHM, Temp
 
 function FitSim = LeastSquares(NTL,NTU,FWHML,FWHMU,tempL,tempU,shiftL,shiftU,molFreq,obsFreq,obsInt,AguList,A,EUJ)
 NTM1 = mean([NTL,NTU]);
@@ -18,6 +26,8 @@ FWHMM1 = mean([FWHML,FWHMU]);
 StartFit = totalSim(molFreq,obsFreq,AguList,A,EUJ,NTM1,FWHMM1,TempM1,shiftM1);
 iteration = 0;
 
+
+%{
 %First Temperature fit
 %FitOn = 'Temperature'
 tempL2 = tempL;
@@ -56,8 +66,10 @@ while(abs((TempSig)/TempFit1)>.0001)%stops iteration when difference between pre
     iteration = iteration + 1;
     
 end
-chiTemp
-TempM
+chiTemp;
+TempM;
+
+%}
 
 %NT1 first column density fit
 %FitOn = 'NT'
@@ -97,14 +109,11 @@ while(abs((NTSig)/NTFitm1)>.01)%stops iteration when difference between previous
     iteration = iteration + 1;
     
 end
-chiNT
-NTM
 
-%{
-%Second Temperature fit
+%First Temperature fit
 %FitOn = 'Temperature'
-tempL = tempL2;
-tempU = tempU2;
+tempL2 = tempL;
+tempU2 = tempU;
 TempFit1 = 1;
 TempSig = 1;
 while(abs((TempSig)/TempFit1)>.0001)%stops iteration when difference between previous fit and new fit is less than .001%
@@ -139,9 +148,6 @@ while(abs((TempSig)/TempFit1)>.0001)%stops iteration when difference between pre
     iteration = iteration + 1;
     
 end
-chiTemp
-TempM
-%}
 
 %First Shift fit
 %FitOn = 'Shift'
@@ -181,8 +187,6 @@ while(abs((shiftSig)/shiftFit1)>.1)%stops iteration when difference between prev
     iteration = iteration + 1;
     
 end
-chiShift
-shiftM
 
 %First FWHM fit
 %FitOn = 'FWHM'
@@ -222,8 +226,6 @@ while(abs((FWHMSig)/FWHMFit1)>.05)%stops iteration when difference between previ
     iteration = iteration + 1;
     
 end
-chiFWHM
-FWHMM
 
 %NT2 second column density fit
 %FitOn = 'NT'
@@ -263,8 +265,6 @@ while(abs((NTSig)/NTFitm1)>.01)%stops iteration when difference between previous
     iteration = iteration + 1;
     
 end
-chiNT
-NTM
 
 %Second FWHM fit
 %FitOn = 'FWHM'
@@ -306,10 +306,9 @@ while(abs((FWHMSig)/FWHMFit1)>.05)%stops iteration when difference between previ
     iteration = iteration + 1;
    
 end
-chiFWHM
-FWHMM
 
-%Third Temperature fit
+
+%Second Temperature fit
 %FitOn = 'Temperature'
 tempL = tempL2;
 tempU = tempU2;
@@ -347,13 +346,12 @@ while(abs((TempSig)/TempFit1)>.0001)%stops iteration when difference between pre
     iteration = iteration + 1;
     
 end
-chiTemp
-TempM
+
 
 EndFit = totalSim(molFreq,obsFreq,AguList,A,EUJ,NTM,FWHMM,TempM,shiftM);
-plot(obsFreq,obsInt,'r-')
-hold on
-plot(obsFreq,EndFit,'b-')
+%plot(obsFreq,obsInt,'r-')
+%hold on
+%plot(obsFreq,EndFit,'b-')
 %hold on
 %plot(molFreq,maxTemp,'go')
 chiStart = sum((StartFit-obsInt).^2);

@@ -2,7 +2,7 @@
 
 clear
 clf
-tic
+ticID = tic;
 DefineVars
 AnalysisScript
-toc
+toc(ticID)

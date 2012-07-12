@@ -28,13 +28,12 @@ NTFit = 1;
 NTSig = 1;
 NTa = NTL;
 NTb = NTU;
-while(abs(NTSig/NTFit)>.01) %stops iteration when difference between previous fit and new fit is less than 1%
-   Temp = mean([tempL,tempU]);
-   FWHM = mean([FWHML,FWHMU]);
-   Shift = mean([shiftL,shiftU]);
+Temp = mean([tempL,tempU]);
+FWHM = mean([FWHML,FWHMU]);
+Shift = mean([shiftL,shiftU]);
+while(abs(NTSig/NTFit)>.1) %stops iteration when difference between previous fit and new fit is less than 1%
    NTc = NTa + r*(NTb-NTa);
    NTd = NTb - r*(NTb-NTa);
-   NTfitm1 = mean([NTa,NTb]);
       
    %point c NT calculation
    fc = totalSim(molFreq,obsFreq,AguList,A,EUJ,NTc,FWHM,Temp,Shift); %creats simulation at point c
@@ -64,13 +63,13 @@ TempSig = 1;
 Tempa = tempL;
 Tempb = tempU;
 iteration = 1;
-while(abs(TempSig/TempFit)>.0001) %stops iteration when difference between previous fit and new fit is less than .01%
-   NT = NTFit;
-   Shift = mean([shiftL,shiftU]);
+NT = NTFit;
+FWHM = mean([FWHML,FWHMU]);
+Shift = mean([shiftL,shiftU]);
+while(abs(TempSig/TempFit)>.01) %stops iteration when difference between previous fit and new fit is less than .01%
    Tempc = Tempa + r*(Tempb-Tempa);
    Tempd = Tempb - r*(Tempb-Tempa);
-   Tempfitm1 = mean([Tempa,Tempb]);
-      
+     
    %point c Temp calculation
    fc = totalSim(molFreq,obsFreq,AguList,A,EUJ,NT,FWHM,Tempc,Shift); %creats simulation at point c
    chic = sum((fc-obsInt).^2); %measures sum of squares of errors for point c
@@ -93,4 +92,77 @@ while(abs(TempSig/TempFit)>.0001) %stops iteration when difference between previ
    %end
 end
 
-GoldenOutput = [NTFit,NTSig,TempFit,TempSig];
+%Shift1 first shift fit
+ShiftFit = 1;
+ShiftSig = 1;
+Shifta = shiftL;
+Shiftb = shiftU;
+iteration = 1;
+NT = NTFit;
+Temp = TempFit;
+FWHM = mean([FWHML,FWHMU]);
+while(abs(ShiftSig/ShiftFit)>.1) %stops iteration when difference between previous fit and new fit is less than 10%
+   Shiftc = Shifta + r*(Shiftb-Shifta);
+   Shiftd = Shiftb - r*(Shiftb-Shifta);
+      
+   %point c Shift calculation
+   fc = totalSim(molFreq,obsFreq,AguList,A,EUJ,NT,FWHM,Temp,Shiftc); %creats simulation at point c
+   chic = sum((fc-obsInt).^2); %measures sum of squares of errors for point c
+   
+   %point d Shift calculation
+   fd = totalSim(molFreq,obsFreq,AguList,A,EUJ,NT,FWHM,Temp,Shiftd); %creats simulation at point d
+   chid = sum((fd-obsInt).^2); %measures sum of squares of errors for point d
+   
+   if(chic<=chid)
+       Shiftb = Shiftd;
+   else
+       Shifta = Shiftc;
+   end
+   
+   ShiftFit = mean([Shifta,Shiftb])
+   ShiftSig = Shiftb-Shifta;
+   iteration = iteration +1;
+   %if(iteration>200)
+   %    break
+   %end
+end
+
+%FWHM1 first FWHM fit
+FWHMFit = 1;
+FWHMSig = 1;
+FWHMa = FWHML;
+FWHMb = FWHMU;
+iteration = 1;
+NT = NTFit;
+Temp = TempFit;
+Shift = ShiftFit;
+while(abs(FWHMSig/FWHMFit)>.05) %stops iteration when difference between previous fit and new fit is less than 5%
+   FWHMc = FWHMa + r*(FWHMb-FWHMa);
+   FWHMd = FWHMb - r*(FWHMb-FWHMa);
+      
+   %point c FWHM calculation
+   fc = totalSim(molFreq,obsFreq,AguList,A,EUJ,NT,FWHMc,Temp,Shift); %creats simulation at point c
+   chic = sum((fc-obsInt).^2); %measures sum of squares of errors for point c
+   
+   %point d FWHM calculation
+   fd = totalSim(molFreq,obsFreq,AguList,A,EUJ,NT,FWHMd,Temp,Shift); %creats simulation at point d
+   chid = sum((fd-obsInt).^2); %measures sum of squares of errors for point d
+   
+   if(chic<=chid)
+       FWHMb = FWHMd;
+   else
+       FWHMa = FWHMc;
+   end
+   
+   FWHMFit = mean([FWHMa,FWHMb])
+   FWHMSig = FWHMb-FWHMa;
+   iteration = iteration +1;
+   %if(iteration>200)
+   %    break
+   %end
+end
+
+final =  totalSim(molFreq,obsFreq,AguList,A,EUJ,NTFit,FWHMFit,TempFit,ShiftFit);
+chifinal = sum((final-obsInt).^2);
+
+GoldenOutput = [NTFit,NTSig,TempFit,TempSig,ShiftFit,ShiftSig,FWHMFit,FWHMSig,chifinal];

@@ -19,7 +19,7 @@
 % which peaks in an observational data set can be attributed to a given
 % molecule
 
-function [IDPeaks,QuantumList,IDList] = PeakMatch(FreqList,IntList,MolFreq,Agu,QuantumNumbers,EUJ,PeakID,totalsim,threshold)
+function [IDPeaks,QuantumList,IDList] = PeakMatch(FreqList,IntList,MolFreq,Agu,QuantumNumbers,EUJ,PeakID,totalsim,threshold,shift)
 IDPeaks = 0; %gives IDPeaks an initial value of 0 so that it is not left unassigned if there are no peaks
 IDList = MolFreq;
 IDList(:,2) = 0;
@@ -33,13 +33,12 @@ while(i<=length(MolFreq)) %loop though molecule frequency list
     j=1;
     while(j<=length(FreqList)) %loop though observational frequency list
         %marks frequency as an assigned peak if there is a match in the frequencies
-        if(PeakID(j) == 1 && abs(FreqList(j)-MolFreq(i))<=1.5 && (totalsim(j)>=IntList(j)*threshold))
+        if(PeakID(j) == 1 && abs(FreqList(j)-(MolFreq(i)+shift))<=1.5 && (totalsim(j)>=IntList(j)*threshold))
             IDPeaks(k,1) = FreqList(j); %assigns transition frequency to observational frequency
             IDPeaks(k,2) = totalsim(j); %assigns transition intensity to simulated intensity
             IDPeaks(k,3) = IntList(j); %gives observational intensity
             IDPeaks(k,4) = Agu(i); %gives Einstein A coefficient times upper state degeneracy for transition
             IDPeaks(k,5) = EUJ(i); %gives upper state energy in joules for transition
-            %QuantumNumbers(i)            
             QuantumList(k) = QuantumNumbers(i);
             k=k+1;
             IDList(i,2) = 1;            

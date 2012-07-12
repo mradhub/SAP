@@ -19,7 +19,7 @@
 % which peaks in an observational data set can be attributed to a given
 % molecule
 
-function [IDPeaks] = PeakLite(FreqList,IntList,MolFreq,Agu,EUJ,PeakID,totalsim,threshold)
+function [IDPeaks] = PeakLite(FreqList,IntList,MolFreq,Agu,EUJ,PeakID,totalsim,threshold,shift)
 IDPeaks = 0; %gives IDPeaks an initial value of 0 so that it is not left unassigned if there are no peaks
 IDList = MolFreq;
 IDList(:,2) = 0;
@@ -32,7 +32,7 @@ while(i<=length(MolFreq)) %loop though molecule frequency list
     j=1;
     while(j<=length(FreqList)) %loop though observational frequency list
         %marks frequency as an assigned peak if there is a match in the frequencies
-        if(PeakID(j) == 1 && abs(FreqList(j)-MolFreq(i))<=1.5 && (totalsim(j)>=IntList(j)*threshold))
+        if(PeakID(j) == 1 && abs(FreqList(j)-(MolFreq(i)+shift))<=2 && (totalsim(j)>=IntList(j)*threshold) &&totalsim(j)>=.03)
             IDPeaks(k,1) = FreqList(j); %assigns transition frequency to observational frequency
             IDPeaks(k,2) = totalsim(j); %assigns transition intensity to simulated intensity
             IDPeaks(k,3) = IntList(j); %gives observational intensity

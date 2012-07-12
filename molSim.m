@@ -1,9 +1,9 @@
-% function molSim = molSim(maxTemp,obsFreq,molFreq,FWHM,shift)
+% function molSim = molSim(maxTemp,obsFreq,molFreq,FWHM_v,shift)
 % Input : maxTemp - simulated intensity vector
 %         obsFreq - observational frequency data
 %         molFreq - molecular frequency data
 %         NT - simulated column density
-%         FWHM - simulated FWHM
+%         FWHM_v - simulated FWHM (km/s)
 %         Temp - simulated temperature
 %         shift - shift in MHz
 % Output: molSim - single molecule simulated spectrum

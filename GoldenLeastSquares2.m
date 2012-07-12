@@ -31,7 +31,7 @@ NTb = NTU;
 Temp = mean([tempL,tempU]);
 FWHM = mean([FWHML,FWHMU]);
 Shift = mean([shiftL,shiftU]);
-while(abs(NTSig/NTFit)>.01) %stops iteration when difference between previous fit and new fit is less than 1%
+while(abs(NTSig/NTFit)>.1) %stops iteration when difference between previous fit and new fit is less than 1%
    NTc = NTa + r*(NTb-NTa);
    NTd = NTb - r*(NTb-NTa);
       
@@ -66,7 +66,7 @@ iteration = 1;
 NT = NTFit;
 FWHM = mean([FWHML,FWHMU]);
 Shift = mean([shiftL,shiftU]);
-while(abs(TempSig/TempFit)>.0001) %stops iteration when difference between previous fit and new fit is less than .01%
+while(abs(TempSig/TempFit)>.01) %stops iteration when difference between previous fit and new fit is less than .01%
    Tempc = Tempa + r*(Tempb-Tempa);
    Tempd = Tempb - r*(Tempb-Tempa);
      
@@ -170,7 +170,7 @@ NTb = NTU;
 Temp = TempFit;
 FWHM = FWHMFit;
 Shift = ShiftFit;
-while(abs(NTSig/NTFit)>.01) %stops iteration when difference between previous fit and new fit is less than 1%
+while(abs(NTSig/NTFit)>.1) %stops iteration when difference between previous fit and new fit is less than 1%
    NTc = NTa + r*(NTb-NTa);
    NTd = NTb - r*(NTb-NTa);
       
@@ -205,7 +205,7 @@ iteration = 1;
 NT = NTFit;
 FWHM = FWHMFit;
 Shift = ShiftFit;
-while(abs(TempSig/TempFit)>.0001) %stops iteration when difference between previous fit and new fit is less than .01%
+while(abs(TempSig/TempFit)>.01) %stops iteration when difference between previous fit and new fit is less than .01%
    Tempc = Tempa + r*(Tempb-Tempa);
    Tempd = Tempb - r*(Tempb-Tempa);
      
