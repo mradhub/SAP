@@ -37,11 +37,11 @@ while(abs(NTSig/NTFit)>.1) %stops iteration when difference between previous fit
       
    %point c NT calculation
    fc = totalSim(molFreq,obsFreq,AguList,A,EUJ,NTc,FWHM,Temp,Shift); %creats simulation at point c
-   chic = sum((fc-obsInt).^2); %measures sum of squares of errors for point c
+   chic = sqrt(sum((fc-obsInt).^2)); %measures sum of squares of errors for point c
    
    %point d NT calculation
    fd = totalSim(molFreq,obsFreq,AguList,A,EUJ,NTd,FWHM,Temp,Shift); %creats simulation at point d
-   chid = sum((fd-obsInt).^2); %measures sum of squares of errors for point d
+   chid = sqrt(sum((fd-obsInt).^2)); %measures sum of squares of errors for point d
    
    if(chic<=chid)
        NTb = NTd;       
@@ -72,11 +72,11 @@ while(abs(TempSig/TempFit)>.01) %stops iteration when difference between previou
      
    %point c Temp calculation
    fc = totalSim(molFreq,obsFreq,AguList,A,EUJ,NT,FWHM,Tempc,Shift); %creats simulation at point c
-   chic = sum((fc-obsInt).^2); %measures sum of squares of errors for point c
+   chic = sqrt(sum((fc-obsInt).^2)); %measures sum of squares of errors for point c
    
    %point d Temp calculation
    fd = totalSim(molFreq,obsFreq,AguList,A,EUJ,NT,FWHM,Tempd,Shift); %creats simulation at point d
-   chid = sum((fd-obsInt).^2); %measures sum of squares of errors for point d
+   chid = sqrt(sum((fd-obsInt).^2)); %measures sum of squares of errors for point d
    
    if(chic<=chid)
        Tempb = Tempd;
@@ -107,11 +107,11 @@ while(abs(ShiftSig/ShiftFit)>.1) %stops iteration when difference between previo
       
    %point c Shift calculation
    fc = totalSim(molFreq,obsFreq,AguList,A,EUJ,NT,FWHM,Temp,Shiftc); %creats simulation at point c
-   chic = sum((fc-obsInt).^2); %measures sum of squares of errors for point c
+   chic = sqrt(sum((fc-obsInt).^2)); %measures sum of squares of errors for point c
    
    %point d Shift calculation
    fd = totalSim(molFreq,obsFreq,AguList,A,EUJ,NT,FWHM,Temp,Shiftd); %creats simulation at point d
-   chid = sum((fd-obsInt).^2); %measures sum of squares of errors for point d
+   chid = sqrt(sum((fd-obsInt).^2)); %measures sum of squares of errors for point d
    
    if(chic<=chid)
        Shiftb = Shiftd;
@@ -142,11 +142,11 @@ while(abs(FWHMSig/FWHMFit)>.05) %stops iteration when difference between previou
       
    %point c FWHM calculation
    fc = totalSim(molFreq,obsFreq,AguList,A,EUJ,NT,FWHMc,Temp,Shift); %creats simulation at point c
-   chic = sum((fc-obsInt).^2); %measures sum of squares of errors for point c
+   chic = sqrt(sum((fc-obsInt).^2)); %measures sum of squares of errors for point c
    
    %point d FWHM calculation
    fd = totalSim(molFreq,obsFreq,AguList,A,EUJ,NT,FWHMd,Temp,Shift); %creats simulation at point d
-   chid = sum((fd-obsInt).^2); %measures sum of squares of errors for point d
+   chid = sqrt(sum((fd-obsInt).^2)); %measures sum of squares of errors for point d
    
    if(chic<=chid)
        FWHMb = FWHMd;
@@ -163,6 +163,6 @@ while(abs(FWHMSig/FWHMFit)>.05) %stops iteration when difference between previou
 end
 
 final =  totalSim(molFreq,obsFreq,AguList,A,EUJ,NTFit,FWHMFit,TempFit,ShiftFit);
-chifinal = sum((final-obsInt).^2);
+chifinal = sqrt(sum((final-obsInt).^2));
 
 GoldenOutput = [NTFit,NTSig,TempFit,TempSig,ShiftFit,ShiftSig,FWHMFit,FWHMSig,chifinal];
