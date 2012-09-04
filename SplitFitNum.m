@@ -1,4 +1,4 @@
-function RandFitOut = RandFit(NTL,NTU,FWHML,FWHMU,tempL,tempU,shiftL,shiftU,molFreq,obsFreq,obsInt,AguList,A,EUJ,split,keylength)
+function SplitFitOut = SplitFitNum(NTL,NTU,FWHML,FWHMU,tempL,tempU,shiftL,shiftU,molFreq,obsFreq,obsInt,AguList,A,EUJ,split)
 %function SplitFitOut = SplitFit3(NTL,NTU,FWHML,FWHMU,tempL,tempU,shiftL,shiftU,molFreq,obsFreq,obsInt,AguList,A,EUJ)
 %(NTL,NTU,FWHML,FWHMU,tempL,tempU,shiftL,shiftU)
 % Input: NTL - column density lower limit (cm^-2)
@@ -20,14 +20,15 @@ function RandFitOut = RandFit(NTL,NTU,FWHML,FWHMU,tempL,tempU,shiftL,shiftU,molF
 % Minimizes function  of sum of squares of errors using a golden section
 % search
 i = 1;
-[molFreqO,AguListO,EUJO] = RandMol(molFreq,AguList,EUJ,split,keylength);
-RandFitOut = zeros(length(molFreq(1,:)),9);
+[molFreqO,AguListO,EUJO] = SplitNum(molFreq,AguList,EUJ,split);
+SplitFitOut = zeros(length(molFreq(1,:)),9);
 iteration = 0;
+keylength = floor(length(molFreq)/split);
 while(i<=length(molFreqO(1,:)))
    if(keylength<5)
        break
    end
-   RandFitOut(i+1,:) = GoldenLeastSquares3(NTL,NTU,FWHML,FWHMU,tempL,tempU,shiftL,shiftU,molFreqO(:,i),obsFreq,obsInt,AguListO(:,i),A,EUJO(:,i));
+   SplitFitOut(i+1,:) = GoldenLeastSquares3(NTL,NTU,FWHML,FWHMU,tempL,tempU,shiftL,shiftU,molFreqO(:,i),obsFreq,obsInt,AguListO(:,i),A,EUJO(:,i));
    i = i+1;
    iteration = iteration+1
 end
@@ -36,9 +37,9 @@ while(i<=9)
    if(keylength<5)
        break
    end
-    RandFitOut(1,i) = mean(RandFitOut(2:end,i));
+    SplitFitOut(1,i) = mean(SplitFitOut(2:end,i));
     i = i+1;
 end
-Fit = totalSim(molFreq,obsFreq,AguList,A,EUJ,RandFitOut(1,1),RandFitOut(1,7),RandFitOut(1,3),RandFitOut(1,5));
+Fit = totalSim(molFreq,obsFreq,AguList,A,EUJ,SplitFitOut(1,1),SplitFitOut(1,7),SplitFitOut(1,3),SplitFitOut(1,5));
 chi = sqrt(sum((Fit-obsInt).^2));
-RandFitOut(1,9) = chi;
+SplitFitOut(1,9) = chi;

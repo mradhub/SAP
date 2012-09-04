@@ -1,4 +1,4 @@
-function [molFreq, AguList, EUJ] = RandMol(molFreqI,AguListI, EUJI,split,keylength)
+function [molFreq, AguList, EUJ] = SplitNum(molFreqI,AguListI, EUJI,split)
 %function [molFreq, AguList, EUJ] = SplitMol3(molFreq,AguList, EUJ)
 % Input: molFreq - molecule frequency list from catalog file
 %        AguList - Einstein A times upper state degeneracy for transitions
@@ -11,21 +11,19 @@ function [molFreq, AguList, EUJ] = RandMol(molFreqI,AguListI, EUJI,split,keyleng
 % Splits the transitions into 'split' seperate sets of transitions
 
 i=1;
+keylength = floor(length(molFreqI)/split);
 molFreq = zeros(keylength,split);
 AguList = zeros(keylength,split);
 EUJ = zeros(keylength,split);
-if(keylength==0)
-    keylength = floor(length(molFreq))/split;
-end
 if(keylength>=5 && keylength<10)
     warning('Number of transitions for this fit may be insufficient. Consider using a smaller split number or another fit method.')
 end
 while(i<=split)
     if(keylength<5)
-        warning('Inappropriate use of RandMol, not enough transitions to perform fit. Consider an alternate fit method.')
+        warning('Inappropriate use of SplitFitNum, not enough transitions to perform fit. Consider an alternate fit method.')
         break
     end
-    key = random('unid',length(molFreqI),keylength,1);
+    key = [i:split:split*keylength];
     molFreq(:,i) = molFreqI(key);
     AguList(:,i) = AguListI(key);
     EUJ(:,i) = EUJI(key);
