@@ -1,10 +1,10 @@
 clf;
 %options = optimset('Display','iter','PlotFcns',@optimplotfval,'MaxFunEvals',6400,'MaxIter',3200,'TolFun',1e-10);
-options = optimset('Display', 'iter','MaxIter',6400);
-low = [1e11,2,10,-5;1e11,2,10,-5];
+options = psoptimset('Display', 'iter','MaxIter',80000,'MaxFunEvals',80000,'UseParallel','always','CompletePoll','on','TolMesh',1e-10,'TolX',1e-10,'TolFun',1e-10,'Vectorized','on');
+low = [1e11,1,10,-5;1e11,1,10,-5];
 up = [1e18,12,600,5;1e18,12,600,5];
 init = [5e16,6,250,0;5e16,6,250,0];
-init2 = [4.24E15,5,299,4;2.33E15,12,128,2];
+init2 = [8.34E15,6,451,4;7.77E15,1,423,-5];
 anonfun2;
 plot(DatCal(:,1),obsInt1)
 hold on
