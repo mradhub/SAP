@@ -11,7 +11,7 @@ anonfun2;
 figure
 subplot(2,2,1),plot(DatCal(:,1),obsInt1),title('Component 1')
 subplot(2,2,2),plot(DatCal(:,1),obsInt2),title('Component 2')
-subplot(2,2,3),plot(DatCal(:,1),obsInt1 + obsInt2),title('Total Spectrum')
+subplot(2,2,3),plot(DatCal(:,1),obsInt1 + ObsInt2),title('Total Spectrum')
 subplot(2,2,4),plot(DatCal(:,1),obsInt1,'b-')
 hold on, subplot(2,2,4),plot(DatCal(:,1),obsInt2,'r-')
 subplot(2,2,4),plot(DatCal(:,1),obsInt1 + obsInt2,'g-')
@@ -24,12 +24,7 @@ x(2,1), x(2,2), x(2,3), x(2,4)
 fval
 Fit1 = sim1(x);
 Fit2 = sim2(x);
-figure
-subplot(2,2,1),plot(DatCal(:,1),Fit1),title('Fit Component 1')
-subplot(2,2,2),plot(DatCal(:,1),Fit2),title('Fit Component 2')
-subplot(2,2,3),plot(DatCal(:,1),Fit1 + Fit2),title('Total Fit')
-subplot(2,2,4),plot(DatCal(:,1),Fit1 + Fit2,'r-'),title('Fit Comparison')
-hold on,subplot(2,2,4),plot(DatCal(:,1),obsInt1+obsInt2,'b-')
+fi
 plot(DatCal(:,1),Fit1)
 hold on
 plot(DatCal(:,1),Fit2,'r-')
