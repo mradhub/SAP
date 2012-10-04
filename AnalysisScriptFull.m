@@ -1,4 +1,4 @@
-% AnalysisScript.m
+% AnalysisScriptFull.m
 % in command window or DefineVars.m must define:
 % obspath - string pointing to observational data
 % AppEff - variable for apperture efficiency of telescope (between 0 and 1)
@@ -48,4 +48,36 @@ QNCat4 = importdata(QNmolpath4);
 part4 = importdata(parpath4);
 A4 = PartitionFunction(part4);
 [AList4,AguList4,EUJ4] = EinsteinAFind(MolCal4,part4);
+
+Cat5 = importdata(molpath5);
+QNCat5 = importdata(QNmolpath5);
+[Mol5,QNMol5] = RenameandKill(Cat5,QNCat5,U,LI);
+[MolCal5,QNMolCal5] = LimitData(Mol5,QNMol5,DatCal);
+part5 = importdata(parpath5);
+A5 = PartitionFunction(part5);
+[AList5,AguList5,EUJ5] = EinsteinAFind(MolCal5,part5);
+
+Cat6 = importdata(molpath6);
+QNCat6 = importdata(QNmolpath6);
+[Mol6,QNMol6] = RenameandKill(Cat6,QNCat6,U,LI);
+[MolCal6,QNMolCal6] = LimitData(Mol6,QNMol6,DatCal);
+part6 = importdata(parpath6);
+A6 = PartitionFunction(part6);
+[AList6,AguList6,EUJ6] = EinsteinAFind(MolCal6,part6);
+
+Cat7 = importdata(molpath7);
+QNCat7 = importdata(QNmolpath7);
+[Mol7,QNMol7] = RenameandKill(Cat7,QNCat7,U,LI);
+[MolCal7,QNMolCal7] = LimitData(Mol7,QNMol7,DatCal);
+part7 = importdata(parpath7);
+A7 = PartitionFunction(part7);
+[AList7,AguList7,EUJ7] = EinsteinAFind(MolCal7,part7);
+
+Cat8 = importdata(molpath8);
+QNCat8 = importdata(QNmolpath8);
+[Mol8,QNMol8] = RenameandKill(Cat8,QNCat8,U,LI);
+[MolCal8,QNMolCal8] = LimitData(Mol8,QNMol8,DatCal);
+part8 = importdata(parpath8);
+A8 = PartitionFunction(part8);
+[AList8,AguList8,EUJ8] = EinsteinAFind(MolCal8,part8);
 
