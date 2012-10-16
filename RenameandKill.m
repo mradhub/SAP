@@ -10,7 +10,7 @@ m=1;
 n=1;
 if(U~=0 && LI~=0)
    while(m<=length(Cat))
-       if(Cat(m,2)<=U ||Cat(m,3)>=LI)
+       if(Cat(m,2)<=U && Cat(m,3)>=LI)
            Mol(n,:)=Cat(m,:);
            QNMol(n)=QNCat(m);
            n=n+1;
@@ -34,7 +34,10 @@ elseif(LI~=0)
            n=n+1;
        end
        m=m+1;
-    end    
+    end
+else
+    Mol = Cat;
+    QNMol = QNCat;
 end
 length(Mol);
 

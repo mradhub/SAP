@@ -25,6 +25,7 @@ part1 = importdata(parpath1);
 A1 = PartitionFunction(part1);
 [AList1,AguList1,EUJ1] = EinsteinAFind(MolCal1,part1);
 
+%{
 Cat2 = importdata(molpath2);
 QNCat2 = importdata(QNmolpath2);
 [Mol2,QNMol2] = RenameandKill(Cat2,QNCat2,U,LI);
@@ -32,6 +33,7 @@ QNCat2 = importdata(QNmolpath2);
 part2 = importdata(parpath2);
 A2 = PartitionFunction(part2);
 [AList2,AguList2,EUJ2] = EinsteinAFind(MolCal2,part2);
+%}
 
 %totalSim = totalSim(MolCal(:,1),DatCal(:,1),AguList,A,EUJ,NT,FWHM,Temp,Shift);
 %{
